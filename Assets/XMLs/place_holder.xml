@@ -1,0 +1,113 @@
+<!--Last updated 2014_03_09 -->
+<GameObject>
+	<Player name = "place holder" walkSpeed = "2.0" dashSpeed = "6.0" jumpForce = "10.0" additionalJumpForce = "5.0"
+		airDashSpeed = "4.0" maxAirActions = "1" gravity = "10.0" flying = "false">
+		<Commands>
+			<Command id = "623">
+				<ButtonInput button = "FORWARD" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWNFORWARD" type = "SKIP"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+				<ButtonInput button = "DOWN" type = "NORMAL"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NORMAL"/>
+				<ButtonInput button = "FORWARD" type = "SKIP"/>
+				<ButtonInput button = "DOWN" type = "SKIP"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+			</Command>
+			<Command id = "236">
+				<ButtonInput button = "DOWN" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWNBACK" type = "SKIP"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NORMAL"/>
+				<ButtonInput button = "FORWARD" type = "NORMAL"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+			</Command>
+			<Command id = "28">
+				<ButtonInput button = "DOWNBACK" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWN" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NORMAL_OR"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+				<ButtonInput button = "FORWARD" type = "SKIP"/>
+				<ButtonInput button = "BACK" type = "SKIP"/>
+				<ButtonInput button = "UP" type = "NORMAL"/>
+			</Command>
+			<Command id = "27">
+				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "DOWN" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "UPBACK" type = "NORMAL"/>
+			</Command>
+			<Command id = "29">
+				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "DOWN" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP_AND"/>
+				<ButtonInput button = "FORWARD" type = "SKIP_AND"/>
+				<ButtonInput button = "BACK" type = "SKIP_AND"/>
+				<ButtonInput button = "UPFORWARD" type = "NORMAL"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+			</Command>
+			<Command id = "66">
+				<ButtonInput button = "FORWARD" type = "NORMAL"/>
+				<ButtonInput button = "NEUTRAL" type = "NORMAL"/>
+				<ButtonInput button = "FORWARD" type = "NORMAL"/>
+			</Command>
+			<Command id = "22">
+				<ButtonInput button = "DOWN" type = "NORMAL"/>
+				<ButtonInput button = "NEUTRAL" type = "NORMAL"/>
+				<ButtonInput button = "DOWN" type = "NORMAL"/>
+			</Command>
+			<Command id = "9">
+				<ButtonInput button = "UPFORWARD" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "7">
+				<ButtonInput button = "UPBACK" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "8">
+				<ButtonInput button = "UP" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "3">
+				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "1">
+				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "2">
+				<ButtonInput button = "DOWN" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "4">
+				<ButtonInput button = "BACK" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "6">
+				<ButtonInput button = "FORWARD" type = "NB_NORMAL"/>
+			</Command>
+			<Command id = "5">
+				<ButtonInput button = "NEUTRAL" type = "NB_NORMAL"/>
+			</Command>
+		</Commands>
+		<MoveSet>
+			<Move id = "623A">
+			</Move>
+			<Move id = "236A">
+			</Move>
+			<Move id = "22A">
+			</Move>
+			<Move id = "3A">
+			</Move>
+			<Move id = "2A">
+			</Move>
+			<Move id = "6A">
+			</Move>
+			<Move id = "5A">
+			</Move>
+			<Move id = "5B">
+			</Move>
+			<Move id = "5C">
+			</Move>
+			<Move id = "5D">
+			</Move>
+			<Move id = "66">
+			</Move>
+			<Move id = "28">
+			</Move>
+		</MoveSet>
+	</Player>
+</GameObject>
