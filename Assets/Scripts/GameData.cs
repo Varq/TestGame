@@ -12,43 +12,8 @@ namespace GameData
 		public const int MAX_HISTORY = 30; // Amount of commands to hold in input history
 		public const float MAX_BUFFER_TIME = 0.2f; // Time to input commands in seconds
 		public const float SIMULTANEOUS_TIME = 0.1f; // Time for buttons to be input in simultaneously
-	}
-
-	public static class Methods
-	{
-		public static char KeyToChar(Key k)
-		{
-			switch(k)
-			{
-			case Key.A:
-				return 'A';
-			case Key.B:
-				return 'B';
-			case Key.C:
-				return 'C';
-			case Key.D:
-				return 'D';
-			case Key.DOWNBACK:
-				return '1';
-			case Key.DOWN:
-				return '2';
-			case Key.DOWNFORWARD:
-				return '3';
-			case Key.BACK:
-				return '4';
-			case Key.NEUTRAL:
-				return '5';
-			case Key.FORWARD:
-				return '6';
-			case Key.UPBACK:
-				return '7';
-			case Key.UP:
-				return '8';
-			case Key.UPFORWARD:
-				return '9';
-			}
-			return 'X';
-		}
+		public static Command NEUTRAL_COMMAND = new Command("5"); // The default neutral command TODO: I don't know if this is right
+		public static Move NEUTRAL_MOVE = new Move("Neutral", NEUTRAL_COMMAND, new List<Key>()); // The default neutral move TODO: Check this too
 	}
 
 	public enum Key
@@ -71,12 +36,11 @@ namespace GameData
 	public enum KeyType
 	{
 		NORMAL, // Button is checked by buffer
-		NB_NORMAL, // Button is checked without buffer
+		NO_BUFFER, // Button is checked without buffer
 		NORMAL_OR, // At least one button must be present to be pass, MUST be multiple instances consecutively to work
-		NB_NORMAL_OR, // NORMAL_OR without checking buffer
 		SKIP, // Button can be input, but isn't necessary to pass
-		SKIP_AND, // These buttons can be input in any order and it will not affect the pass, MUST be multiple instances consecutively to work
-		CHARGE // Button must be held down for the charge threshold to pass, MUST not be the last input to work properly (TODO: Not yet implemented)
+		CHARGE, // Button must be held down for the charge threshold to pass, MUST not be the last input to work properly (TODO: Not yet implemented)
+		REPEAT // Button is at the end and is possible to alternate between that key and neutral to get the input
 	};
 	
 	public abstract class KeyPress
@@ -146,6 +110,11 @@ namespace GameData
 			key = k;
 			pressed = false;
 		}
+
+		public bool IsPressed()
+		{
+			return pressed;
+		}
 		
 		// Return how long the currently pressed button has been held down
 		public float GetHoldTime()
@@ -207,15 +176,21 @@ namespace GameData
 		private string commandName;
 		private List<CommandNode> command;
 		private int index;
-		private float timeActive;
 		private List<Key> skipList;
 		private Key lastKey;
+		private List<Key> orList;
+
+		public Command(string name)
+		{
+			commandName = name;
+		}
 		
 		public Command(string name, List<CommandNode> commandNodes)
 		{
 			commandName = name;
 			command = commandNodes;
 			skipList = new List<Key>();
+			orList = new List<Key>();
 			Clear ();
 		}
 		
@@ -256,7 +231,6 @@ namespace GameData
 		{
 			if(index >= command.Count)
 			{
-				timeActive = Time.time;
 				return true;
 			}
 			return false;
@@ -272,7 +246,6 @@ namespace GameData
 		public void Clear()
 		{
 			index = 0;
-			timeActive = -100.0f;
 			skipList.Clear ();
 			lastKey = command[0].GetKey ();
 		}
@@ -315,6 +288,50 @@ namespace GameData
 			// Set the new last key as the current key and return true
 			lastKey = k;
 			return true;
+		}
+
+		public bool ContainsOrKey(Key k)
+		{
+			return orList.Contains(k);
+		}
+
+		public void AddOrKey(Key k)
+		{
+			orList.Add (k);
+		}
+	}
+
+	public class Move
+	{
+		private string name;
+		private Command command;
+		private List<Key> buttons;
+
+		public Move(string n, Command c, List<Key> b)
+		{
+			name = n;
+			command = c;
+			buttons = b;
+		}
+
+		public string Name
+		{
+			get { return name; }
+		}
+
+		public Command Command
+		{
+			get { return command; }
+		}
+
+		public List<Key> Buttons
+		{
+			get { return buttons; }
+		}
+
+		public override string ToString()
+		{
+			return name;
 		}
 	}
 }

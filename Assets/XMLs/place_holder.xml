@@ -1,10 +1,10 @@
 <!--Last updated 2014_03_09 -->
 <GameObject>
-	<Player name = "place holder" walkSpeed = "2.0" dashSpeed = "6.0" jumpForce = "10.0" additionalJumpForce = "5.0"
+	<Player name = "place holder" walkSpeed = "2.0" dashSpeed = "6.0" jumpForce = "5.0" additionalJumpForce = "5.0"
 		airDashSpeed = "4.0" maxAirActions = "1" gravity = "10.0" flying = "false">
 		<Commands>
 			<Command id = "623">
-				<ButtonInput button = "FORWARD" type = "NB_NORMAL"/>
+				<ButtonInput button = "FORWARD" type = "NO_BUFFER"/>
 				<ButtonInput button = "DOWNFORWARD" type = "SKIP"/>
 				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
 				<ButtonInput button = "DOWN" type = "NORMAL"/>
@@ -14,7 +14,7 @@
 				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
 			</Command>
 			<Command id = "236">
-				<ButtonInput button = "DOWN" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWN" type = "NO_BUFFER"/>
 				<ButtonInput button = "DOWNBACK" type = "SKIP"/>
 				<ButtonInput button = "DOWNFORWARD" type = "NORMAL"/>
 				<ButtonInput button = "FORWARD" type = "NORMAL"/>
@@ -27,23 +27,27 @@
 				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
 				<ButtonInput button = "FORWARD" type = "SKIP"/>
 				<ButtonInput button = "BACK" type = "SKIP"/>
+				<ButtonInput button = "UPBACK" type = "SKIP"/>
+				<ButtonInput button = "UPFORWARD" type = "SKIP"/>
 				<ButtonInput button = "UP" type = "NORMAL"/>
 			</Command>
 			<Command id = "27">
-				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL_OR"/>
-				<ButtonInput button = "DOWN" type = "NB_NORMAL_OR"/>
-				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL_OR"/>
+				<ButtonInput button = "DOWNBACK" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWN" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NORMAL_OR"/>
+				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+				<ButtonInput button = "FORWARD" type = "SKIP"/>
+				<ButtonInput button = "BACK" type = "SKIP"/>
 				<ButtonInput button = "UPBACK" type = "NORMAL"/>
 			</Command>
 			<Command id = "29">
-				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL_OR"/>
-				<ButtonInput button = "DOWN" type = "NB_NORMAL_OR"/>
-				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL_OR"/>
-				<ButtonInput button = "NEUTRAL" type = "SKIP_AND"/>
-				<ButtonInput button = "FORWARD" type = "SKIP_AND"/>
-				<ButtonInput button = "BACK" type = "SKIP_AND"/>
-				<ButtonInput button = "UPFORWARD" type = "NORMAL"/>
+				<ButtonInput button = "DOWNBACK" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWN" type = "NORMAL_OR"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NORMAL_OR"/>
 				<ButtonInput button = "NEUTRAL" type = "SKIP"/>
+				<ButtonInput button = "FORWARD" type = "SKIP"/>
+				<ButtonInput button = "BACK" type = "SKIP"/>
+				<ButtonInput button = "UPFORWARD" type = "NORMAL"/>
 			</Command>
 			<Command id = "66">
 				<ButtonInput button = "FORWARD" type = "NORMAL"/>
@@ -53,60 +57,205 @@
 			<Command id = "22">
 				<ButtonInput button = "DOWN" type = "NORMAL"/>
 				<ButtonInput button = "NEUTRAL" type = "NORMAL"/>
-				<ButtonInput button = "DOWN" type = "NORMAL"/>
+				<ButtonInput button = "DOWN" type = "REPEAT"/>
 			</Command>
 			<Command id = "9">
-				<ButtonInput button = "UPFORWARD" type = "NB_NORMAL"/>
+				<ButtonInput button = "UPFORWARD" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "7">
-				<ButtonInput button = "UPBACK" type = "NB_NORMAL"/>
+				<ButtonInput button = "UPBACK" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "8">
-				<ButtonInput button = "UP" type = "NB_NORMAL"/>
+				<ButtonInput button = "UP" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "3">
-				<ButtonInput button = "DOWNFORWARD" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWNFORWARD" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "1">
-				<ButtonInput button = "DOWNBACK" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWNBACK" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "2">
-				<ButtonInput button = "DOWN" type = "NB_NORMAL"/>
+				<ButtonInput button = "DOWN" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "4">
-				<ButtonInput button = "BACK" type = "NB_NORMAL"/>
+				<ButtonInput button = "BACK" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "6">
-				<ButtonInput button = "FORWARD" type = "NB_NORMAL"/>
+				<ButtonInput button = "FORWARD" type = "NO_BUFFER"/>
 			</Command>
 			<Command id = "5">
-				<ButtonInput button = "NEUTRAL" type = "NB_NORMAL"/>
+				<ButtonInput button = "NEUTRAL" type = "NO_BUFFER"/>
 			</Command>
 		</Commands>
 		<MoveSet>
+			<Move id = "5BCD">
+				<Command command = "5"/>
+				<Button button = "B"/>
+				<Button button = "C"/>
+				<Button button = "D"/>
+			</Move>
 			<Move id = "623A">
+				<Command command = "623"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "623B">
+				<Command command = "623"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "623C">
+				<Command command = "623"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "623D">
+				<Command command = "623"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "236A">
+				<Command command = "236"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "236B">
+				<Command command = "236"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "236C">
+				<Command command = "236"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "236D">
+				<Command command = "236"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "22A">
+				<Command command = "22"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "22B">
+				<Command command = "22"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "22C">
+				<Command command = "22"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "22D">
+				<Command command = "22"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "3A">
+				<Command command = "3"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "3B">
+				<Command command = "3"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "3C">
+				<Command command = "3"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "3D">
+				<Command command = "3"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "2A">
+				<Command command = "2"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "2B">
+				<Command command = "2"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "2C">
+				<Command command = "2"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "2D">
+				<Command command = "2"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "6A">
+				<Command command = "6"/>
+				<Button button = "A"/>
+			</Move>
+			<Move id = "6B">
+				<Command command = "6"/>
+				<Button button = "B"/>
+			</Move>
+			<Move id = "6C">
+				<Command command = "6"/>
+				<Button button = "C"/>
+			</Move>
+			<Move id = "6D">
+				<Command command = "6"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "5A">
+				<Command command = "5"/>
+				<Button button = "A"/>
 			</Move>
 			<Move id = "5B">
+				<Command command = "5"/>
+				<Button button = "B"/>
 			</Move>
 			<Move id = "5C">
+				<Command command = "5"/>
+				<Button button = "C"/>
 			</Move>
 			<Move id = "5D">
+				<Command command = "5"/>
+				<Button button = "D"/>
 			</Move>
 			<Move id = "66">
+				<Command command = "66"/>
 			</Move>
 			<Move id = "28">
+				<Command command = "28"/>
+			</Move>
+			<Move id = "27">
+				<Command command = "27"/>
+			</Move>
+			<Move id = "29">
+				<Command command = "29"/>
+			</Move>
+			<Move id = "9">
+				<Command command = "9"/>
+			</Move>
+			<Move id = "7">
+				<Command command = "7"/>
+				<Action type = "ground" hold = "0.1f">
+					<Flip/>
+				</Action>
+			</Move>
+			<Move id = "8">
+				<Command command = "8"/>
+			</Move>
+			<Move id = "6">
+				<Command command = "6"/>
+				<Action type = "ground">
+					<Movement xDistance = "2.0f"/>
+				</Action>
+			</Move>
+			<Move id = "4">
+				<Command command = "4"/>
+				<Action type = "ground" hold = "0.1f">
+					<Flip/>
+				</Action>
+			</Move>
+			<Move id = "2">
+				<Command command = "2"/>
+			</Move>
+			<Move id = "3">
+				<Command command = "3"/>
+			</Move>
+			<Move id = "1">
+				<Command command = "1"/>
+				<Action type = "ground" hold = "0.1f">
+					<Flip/>
+				</Action>
+			</Move>
+			<Move id = "5">
+				<Command command = "5"/>
 			</Move>
 		</MoveSet>
 	</Player>

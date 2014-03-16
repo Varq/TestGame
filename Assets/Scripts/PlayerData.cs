@@ -1,13 +1,15 @@
 // Last Updated 2014_03_09
 
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using GameData;
 
-public class PlayerData
+public class PlayerData : MonoBehaviour
 {
+	string fileName;
 	XDocument doc;
 	string charName;
 	float walkSpeed;
@@ -19,30 +21,13 @@ public class PlayerData
 	float gravity;
 	bool flying;
 	List<Command> commands;
-	List<string> moveSet;
+	List<Move> moveSet;
 
-	public PlayerData(string fileName)
+	void Start()
 	{
+		fileName = "Assets/XMLs/place_holder.xml";
 		doc = XDocument.Load (fileName);
 		SetValues();
-	}
-
-	public string DebugString()
-	{
-		string s = "";
-
-		IEnumerable<XElement> items = doc.Descendants ("Command");
-		foreach(var command in items)
-		{
-			s += "ID: " + command.Attribute ("id").Value + "\n";
-			IEnumerable<XElement> keyInputs = command.Descendants ("ButtonInput");
-			foreach(var button in keyInputs)
-			{
-				s += "{ Button: " + button.Attribute("button").Value + ", Type: " + button.Attribute ("type").Value + " }\n";
-			}
-		}
-
-		return s;
 	}
 
 	void SetValues()
@@ -54,23 +39,24 @@ public class PlayerData
 		AdditionalJumpForce = (float) doc.Element ("GameObject").Element ("Player").Attribute ("additionalJumpForce");
 		AirDashSpeed = (float) doc.Element ("GameObject").Element ("Player").Attribute ("airDashSpeed");
 		MaxAirActions = (int) doc.Element ("GameObject").Element ("Player").Attribute ("maxAirActions");
+		Debug.Log ("MAX: " + (int) doc.Element ("GameObject").Element ("Player").Attribute ("maxAirActions"));
 		Gravity = (float) doc.Element ("GameObject").Element ("Player").Attribute ("gravity");
 		Flying = (bool) doc.Element ("GameObject").Element ("Player").Attribute ("flying");
-		Commands = new List<Command>();
-		moveSet = new List<string>();
 		SetCommands();
 		SetMoveSet();
 	}
 
 	void SetCommands()
 	{
-		IEnumerable<XElement> items = doc.Descendants ("Command");
+		Commands = new List<Command>();
+		//IEnumerable<XElement> items = doc.Root.Element ("Player").Element("Commands").Elements ("Command");
+		IEnumerable<XElement> items = doc.Descendants("Commands").Elements ("Command");
 		foreach(var command in items)
 		{
-			string commandName = command.Attribute ("id").Value;
+			string commandName = command.Attribute ("id").Value.ToString ();
 
 			List<CommandNode> c = new List<CommandNode>();
-			IEnumerable<XElement> buttonInputs = command.Descendants ("ButtonInput");
+			IEnumerable<XElement> buttonInputs = command.Elements ("ButtonInput");
 			foreach(var button in buttonInputs)
 			{
 				Key key = StringToKey(button.Attribute ("button").Value.ToString ());
@@ -78,6 +64,34 @@ public class PlayerData
 				c.Add (new CommandNode(key, type));
 			}
 			commands.Add(new Command(commandName, c));
+		}
+	}
+
+	// TODO: Add actions
+	void SetMoveSet()
+	{
+		moveSet = new List<Move>();
+		IEnumerable<XElement> items = doc.Descendants ("MoveSet").Elements("Move");
+		foreach(var move in items)
+		{
+			string moveName = move.Attribute ("id").Value;
+			Command command = null;
+			for(int i = 0; i < Commands.Count; i ++)
+			{
+				if(Commands[i].ToString ().Equals(move.Element("Command").Attribute ("command").Value.ToString ()))
+				{
+					command = Commands[i];
+					break;
+				}
+			}
+
+			IEnumerable<XElement> buttonList = move.Elements ("Button");
+			List<Key> buttons = new List<Key>();
+			foreach(var button in buttonList)
+			{
+				buttons.Add (StringToKey ((button.Attribute ("button").Value.ToString ())));
+			}
+			moveSet.Add(new Move(moveName, command, buttons));
 		}
 	}
 
@@ -148,38 +162,25 @@ public class PlayerData
 		case "NORMAL":
 			type = KeyType.NORMAL;
 			break;
-		case "NB_NORMAL":
-			type = KeyType.NB_NORMAL;
+		case "NO_BUFFER":
+			type = KeyType.NO_BUFFER;
 			break;
 		case "NORMAL_OR":
 			type = KeyType.NORMAL_OR;
 			break;
-		case "NB_NORMAL_OR":
-			type = KeyType.NB_NORMAL_OR;
-			break;
 		case "SKIP":
 			type = KeyType.SKIP;
 			break;
-		case "SKIP_AND":
-			type = KeyType.SKIP_AND;
-			break;
 		case "CHARGE":
 			type = KeyType.CHARGE;
+			break;
+		case "REPEAT":
+			type = KeyType.REPEAT;
 			break;
 		default:
 			throw new Exception(s);
 		}
 		return type;
-	}
-
-	void SetMoveSet()
-	{
-		IEnumerable<XElement> items = doc.Descendants ("Move");
-		foreach(var move in items)
-		{
-			string moveName = move.Attribute ("id").Value;
-			moveSet.Add(moveName);
-		}
 	}
 
 	public string CharName
@@ -242,7 +243,7 @@ public class PlayerData
 		set { commands = value; }
 	}
 
-	public List<string> MoveSet
+	public List<Move> MoveSet
 	{
 		get { return moveSet; }
 	}

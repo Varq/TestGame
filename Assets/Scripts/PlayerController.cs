@@ -10,89 +10,85 @@ using GameData;
 public class PlayerController : MonoBehaviour 
 {
 	InputManager inputs; // Button inputs
-
-	// TODO: Figure out XML files?
-	public PlayerData data; // The XML file which contains all player data
+	PlayerData data; // The XML file which contains all player data
 
 	PlayerState state;
 
 	bool facingRight = true; // Is the player facing right?
 
-	// TODO: Delete this, used to print input history
-	string history = "";
-	List<CommandNode> commands;
-	Command testCommand;
-
-	// Use this for initialization
+	// Connect to other components
 	void Start () 
 	{
 		inputs = GetComponent<InputManager>();
-
-		data = new PlayerData("Assets/XMLs/place_holder.xml");
+		data = GetComponent<PlayerData>();
+		state = GetComponent<PlayerState>();
 	}
 
-	// TODO: May be not be flipping properly? Check this out.
 	void FixedUpdate ()
 	{
+		Act ();
+	}
+
+	void Update ()
+	{
+		NextAction ();
+	}
+	
+	// Debug strings
+	string s2 = "";
+	void NextAction()
+	{
+		List<Move> moves = inputs.RecentMove ();
+		string str = "";
+		for(int i = 0; i < moves.Count; i++)
+		{
+			str += moves[i] + " ";
+		}
+		
+		if(!s2.Equals (str))
+		{
+			s2 = str;
+			Debug.Log (s2);
+		}
+	}
+
+	void Act()
+	{
+		List<Move> moves = inputs.RecentMove ();
+		// TODO: May be not be flipping properly? Check this out.
 		if(inputs.CurrentDirection() == Key.DOWNBACK ||
 		   inputs.CurrentDirection() == Key.BACK ||
 		   inputs.CurrentDirection() == Key.UPBACK)
 			Flip ();
 
-		float move = 0;
+		float moveX = 0;
+		float moveY = 0;
 		if(inputs.CurrentDirection() == Key.FORWARD)
 		{
-			move = data.WalkSpeed;
+			moveX = data.WalkSpeed;
+		}
+
+		if((inputs.CurrentDirection() == Key.UP ||
+		   inputs.CurrentDirection () == Key.UPBACK ||
+		   inputs.CurrentDirection () == Key.UPFORWARD) &&
+		   state.AirActions > 0)
+		{
+			Debug.Log ("Jump");
+			moveY = data.JumpForce;
+			state.AirActions--;
+		}
+		else
+		{
+			moveY = rigidbody2D.velocity.y;
 		}
 
 		if(!FacingRight())
 		{
-			move *= -1;
+			moveX *= -1;
 		}
 		
-		rigidbody2D.velocity = new Vector2( move, rigidbody2D.velocity.y );
+		rigidbody2D.velocity = new Vector2( moveX, moveY );
 	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-		string s = inputs.InputHistory();
-		if(!s.Equals (history))
-		{
-			history = s;
-			//Debug.Log (history);
-		}
-	}
-	
-	// TODO: Get this working properly
-	/*string MatchCommand()
-	{
-		string button = "";
-		string command;
-		bool cleanInput = false;
-		if(inputs.IsLastInputAButton ())
-		{
-			button = inputs.GetLastButton ().Value.GetButton ().ToString();
-			cleanInput = true;
-		}
-		command = "5" + button;
-		for(int i = 0; i < data.Commands.Count; i++)
-		{
-			if(inputs.MatchDirectionInput(data.Commands[i]))
-			{
-				string candidate = data.Commands[i].ToString () + button;
-				if(data.MoveSet.Contains (candidate))
-				{
-					command = candidate;
-					Debug.Log (candidate);
-					break;
-				}
-			}
-		}
-		if(cleanInput)
-			inputs.cleanDirectionInputs();
-		return command;
-	}*/
 
 	void Flip()
 	{
@@ -108,59 +104,6 @@ public class PlayerController : MonoBehaviour
 	}
 }
 
-// TODO: Get this to work
-public class PlayerState
-{
-	private bool grounded; // True - Player is on the ground, False - Player is floating
-	private bool crouching; // True - Player is crouching, False - Player is standing
-	private int stun; // frames until player is able to take action
-	private int airActions; // current number of air actions
-	private int maxAirActions;
-
-	public PlayerState(bool grounded, int maxAirActions)
-	{
-		Grounded = grounded;
-		Crouching = false;
-		Stun = 0;
-		AirActions = maxAirActions;
-		MaxAirActions =  maxAirActions;
-	}
-
-	public bool Grounded
-	{
-		get { return grounded; }
-		set { grounded = value; }
-	}
-
-	public bool Crouching
-	{
-		get { return crouching; }
-		set { crouching = value; }
-	}
-
-	public int Stun
-	{
-		get { return stun; }
-		set { stun = value; }
-	}
-
-	public int AirActions
-	{
-		get { return airActions; }
-		set { airActions = value; }
-	}
-
-	public int MaxAirActions
-	{
-		get { return maxAirActions; }
-		set { maxAirActions = value; }
-	}
-
-	public void ResetAirActions()
-	{
-		AirActions = MaxAirActions;
-	}
-}
 
 
 
